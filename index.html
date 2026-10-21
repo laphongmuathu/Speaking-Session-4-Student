@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VSTEP Speaking - Lesson 3 Quiz</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#667085;--border:#d8dee9;--primary:#1f5eff;--primary-dark:#1748c9;--success:#15803d;--success-bg:#ecfdf3;--danger:#b42318;--danger-bg:#fff1f0;--accent:#7c3aed;--shadow:0 10px 30px rgba(26,37,71,.08)}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#eef3ff 0,#f8fafc 240px,var(--bg) 100%);color:var(--text);line-height:1.55}
+.wrap{max-width:980px;margin:auto;padding:24px 16px 56px}
+.hero{background:linear-gradient(135deg,#173ea5,#1f5eff 58%,#6d5dfc);color:#fff;border-radius:24px;padding:28px;box-shadow:var(--shadow);margin-bottom:18px}
+.eyebrow{display:inline-block;font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;background:rgba(255,255,255,.16);padding:6px 10px;border-radius:999px;margin-bottom:10px}
+h1{font-size:clamp(1.8rem,5vw,3rem);margin:0 0 8px}.hero p{margin:0;color:#e8edff;max-width:720px}
+.meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.pill{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);padding:8px 11px;border-radius:999px;font-size:.88rem}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:18px 0;flex-wrap:wrap}
+.progress-shell{flex:1;min-width:220px;background:#e6ebf4;border-radius:999px;height:12px;overflow:hidden}.progress-bar{height:100%;width:0;background:linear-gradient(90deg,#1f5eff,#7c3aed);transition:.25s}.counter{font-weight:700;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:22px;margin:16px 0}
+.qnum{font-size:.78rem;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.08em}.question{font-size:1.08rem;font-weight:800;margin:6px 0 14px}
+.options{display:grid;gap:10px}label.option{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--border);border-radius:14px;padding:12px 14px;cursor:pointer;transition:.18s;background:#fff}
+label.option:hover{border-color:#aab7d4;background:#fafcff}input[type=radio]{margin-top:4px;accent-color:var(--primary);transform:scale(1.1)}
+.feedback{display:none;margin-top:12px;padding:11px 13px;border-radius:12px;font-size:.92rem}.feedback.correct{display:block;background:var(--success-bg);color:var(--success);border:1px solid #bbf7d0}.feedback.wrong{display:block;background:var(--danger-bg);color:var(--danger);border:1px solid #fecaca}
+.actions{position:sticky;bottom:12px;display:flex;gap:10px;justify-content:center;margin-top:24px;z-index:5;flex-wrap:wrap}
+button{border:0;border-radius:12px;padding:12px 18px;font-weight:800;font-size:1rem;cursor:pointer;box-shadow:0 7px 18px rgba(31,94,255,.16)}.primary{background:var(--primary);color:#fff}.primary:hover{background:var(--primary-dark)}.secondary{background:#fff;color:var(--text);border:1px solid var(--border)}
+.result{display:none;background:#fff;border:2px solid #cdd7f7;border-radius:22px;padding:24px;margin-top:24px;box-shadow:var(--shadow)}.result.show{display:block}.score{font-size:2.2rem;font-weight:900;color:var(--primary);margin:4px 0}.band{font-weight:800;color:var(--accent)}
+.review-list{margin:14px 0 0;padding-left:20px}.review-list li{margin:7px 0}.mini-note{background:#fff7ed;border-left:4px solid #f59e0b;padding:12px 14px;border-radius:10px;margin:14px 0 0}
+footer{color:var(--muted);font-size:.82rem;text-align:center;margin-top:28px}
+@media(max-width:640px){.hero{padding:22px 18px;border-radius:18px}.card{padding:18px 15px}.actions{position:static}button{width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section class="hero">
+<div class="eyebrow">VSTEP Speaking • Buổi 3</div>
+<h1>Lesson 3 Quiz</h1>
+<p>15 câu hỏi ôn tập từ vựng nâng cấp, phát triển câu trả lời và ngữ pháp cho VSTEP Speaking Part 1.</p>
+<div class="meta"><span class="pill">15 questions</span><span class="pill">A2+ → B1 bridge</span><span class="pill">Auto scoring</span><span class="pill">GitHub Pages ready</span></div>
+</section>
+<div class="toolbar"><div class="progress-shell"><div class="progress-bar" id="progressBar"></div></div><div class="counter" id="counter">0 / 15 answered</div></div>
+<form id="quizForm"></form>
+<div class="actions"><button class="primary" type="button" id="submitBtn">Check my answers</button><button class="secondary" type="button" id="resetBtn">Try again</button></div>
+<section class="result" id="resultBox" aria-live="polite">
+<div class="qnum">Your result</div><div class="score" id="scoreText">0 / 15</div><div class="band" id="bandText"></div><div id="resultMessage"></div>
+<div class="mini-note"><strong>Speaking reminder:</strong> A stronger VSTEP answer usually includes a direct answer, one clear reason, and one relevant example or personal detail.</div>
+<ul class="review-list" id="reviewList"></ul>
+</section>
+<footer>Designed for classroom review • No server or database required</footer>
+</div>
+<script>
+const quizData=[
+{q:"Which expression is the best upgrade for “like something”?",options:["be keen on something","rely heavily on something","stay connected with others","maintain a healthy lifestyle"],answer:0,explain:"“Be keen on something” is a natural B1-level way to express that you like something."},
+{q:"Which expression means “use something a lot”?",options:["take up a new hobby","rely heavily on something","broaden your knowledge","unwind after a busy day"],answer:1,explain:"“Rely heavily on something” means you depend on or use it a lot."},
+{q:"Choose the best completion: “I enjoy reading because it helps me ______ and learn about different cultures.”",options:["stay connected with","put me in a good mood","broaden my knowledge","stay physically active"],answer:2,explain:"The lesson uses “broaden my knowledge” with reading and learning about cultures."},
+{q:"Choose the best completion: “I usually watch a comedy to ______ after studying.”",options:["unwind after a busy day","create better career opportunities","stay physically active","rely heavily on my phone"],answer:0,explain:"“Unwind” means relax after stress, work or study."},
+{q:"Which sentence is grammatically correct?",options:["I’m quite keen in reading novels.","I’m quite keen at reading novels.","I’m quite keen on reading novels.","I’m quite keen for reading novels."],answer:2,explain:"The correct collocation is “be keen on + noun / V-ing”."},
+{q:"Choose the correct phrase: “I use my phone to stay connected ______ my friends.”",options:["to","for","with","at"],answer:2,explain:"The correct collocation is “stay connected with someone”."},
+{q:"Choose the best verb: “Regular exercise helps people ______ a healthy lifestyle.”",options:["maintain","do","make","create"],answer:0,explain:"The natural collocation is “maintain a healthy lifestyle”."},
+{q:"Choose the best verb: “Reading helps me ______ my knowledge.”",options:["wide","broad","broaden","large"],answer:2,explain:"“Broaden” is the verb form used in the expression “broaden my knowledge”."},
+{q:"Which is the most natural upgraded version of “I use my phone a lot”?",options:["I rely quite heavily on my phone because it helps me stay connected with others.","I stay physically active on my phone every day.","I unwind my phone after a busy day.","I broaden my phone knowledge."],answer:0,explain:"This matches the lesson model: upgraded expression + reason."},
+{q:"What is the most logical order for this answer? B. Yes, definitely. I’m a big fan of watching movies. C. They help me unwind after a busy week and put me in a good mood. D. I particularly enjoy comedies because they are entertaining. A. For example, I often watch comedies with my family at weekends.",options:["B → C → D → A","A → B → C → D","C → B → A → D","D → A → B → C"],answer:0,explain:"The lesson answer key gives B → C → D → A as the standard logical order."},
+{q:"Which option best develops a speaking answer?",options:["Yes.","Yes, I do.","Yes, I do because it is good.","Yes, definitely. I’m keen on it because it helps me relax. For example, I often do it at weekends."],answer:3,explain:"A stronger answer includes a direct response, a reason, and a relevant example."},
+{q:"Combine the ideas correctly with “because”: “I enjoy reading. It helps me learn about different cultures.”",options:["I enjoy reading because it helps me learn about different cultures.","Because I enjoy reading, but it helps me learn about different cultures.","I enjoy reading although it helps me learn about different cultures.","I enjoy reading if it helps me learn about different cultures."],answer:0,explain:"“Because” introduces the reason: reading helps the speaker learn about cultures."},
+{q:"Choose the correct sentence with “although”.",options:["Although smartphones are convenient, they can distract students.","Although smartphones are convenient because they distract students.","Smartphones although are convenient they distract students.","Although smartphones convenient, but they distract students."],answer:0,explain:"Use “Although + clause, clause” without adding “but”."},
+{q:"Which answer best fits the speaking frame for technology?",options:["I rely quite heavily on my smartphone. This is mainly because it helps me stay connected with others. For instance, I often use it to message my classmates.","Smartphone. Good. I use a lot.","I am keen on smartphone because career opportunities.","I stay physically active with my phone because it is a phone."],answer:0,explain:"This answer follows the lesson frame: upgraded phrase + reason + example."},
+{q:"According to the lesson, what is the main goal when improving a speaking answer?",options:["Make every answer sound very sophisticated.","Use as many difficult words as possible.","Give a clear, relevant, sufficiently developed answer using language you can control.","Memorize one perfect model answer for every topic."],answer:2,explain:"The lesson emphasizes clarity, relevance, development, and controllable language—not unnecessary sophistication."}
+];
+const form=document.getElementById("quizForm"),progressBar=document.getElementById("progressBar"),counter=document.getElementById("counter"),resultBox=document.getElementById("resultBox"),scoreText=document.getElementById("scoreText"),bandText=document.getElementById("bandText"),resultMessage=document.getElementById("resultMessage"),reviewList=document.getElementById("reviewList");
+function renderQuiz(){form.innerHTML="";quizData.forEach((item,i)=>{const card=document.createElement("section");card.className="card";card.innerHTML=`<div class="qnum">Question ${i+1}</div><div class="question">${item.q}</div><div class="options">${item.options.map((opt,j)=>`<label class="option"><input type="radio" name="q${i}" value="${j}"><span>${String.fromCharCode(65+j)}. ${opt}</span></label>`).join("")}</div><div class="feedback" id="fb${i}"></div>`;form.appendChild(card)});form.querySelectorAll('input[type="radio"]').forEach(el=>el.addEventListener("change",updateProgress));updateProgress()}
+function updateProgress(){let answered=0;quizData.forEach((_,i)=>{if(form.querySelector(`input[name="q${i}"]:checked`))answered++});counter.textContent=`${answered} / ${quizData.length} answered`;progressBar.style.width=`${answered/quizData.length*100}%`}
+function submitQuiz(){let score=0,unanswered=0;reviewList.innerHTML="";quizData.forEach((item,i)=>{const chosen=form.querySelector(`input[name="q${i}"]:checked`),fb=document.getElementById(`fb${i}`);fb.className="feedback";if(!chosen){unanswered++;fb.textContent="Chưa trả lời / Not answered.";fb.classList.add("wrong");return}const val=Number(chosen.value);if(val===item.answer){score++;fb.textContent="✓ Correct. "+item.explain;fb.classList.add("correct")}else{fb.textContent=`✗ Not quite. Correct answer: ${String.fromCharCode(65+item.answer)}. ${item.explain}`;fb.classList.add("wrong");const li=document.createElement("li");li.textContent=`Question ${i+1}: ${item.explain}`;reviewList.appendChild(li)}});scoreText.textContent=`${score} / ${quizData.length}`;const pct=score/quizData.length;if(pct>=.87){bandText.textContent="Excellent review performance";resultMessage.textContent="You show strong control of the key vocabulary, grammar and answer-building techniques from Lesson 3."}else if(pct>=.67){bandText.textContent="Good progress";resultMessage.textContent="You understand most of the lesson. Review the explanations for the questions you missed."}else if(pct>=.47){bandText.textContent="Developing";resultMessage.textContent="You have the main ideas, but you should review the upgraded expressions and speaking structures before the next practice."}else{bandText.textContent="Needs more practice";resultMessage.textContent="Review the vocabulary bank, sentence patterns and model answers, then try the quiz again."}if(unanswered)resultMessage.textContent+=` You left ${unanswered} question(s) unanswered.`;resultBox.classList.add("show");resultBox.scrollIntoView({behavior:"smooth",block:"start"})}
+function resetQuiz(){form.reset();resultBox.classList.remove("show");reviewList.innerHTML="";document.querySelectorAll(".feedback").forEach(f=>{f.className="feedback";f.textContent=""});updateProgress();window.scrollTo({top:0,behavior:"smooth"})}
+document.getElementById("submitBtn").addEventListener("click",submitQuiz);document.getElementById("resetBtn").addEventListener("click",resetQuiz);renderQuiz();
+</script>
+</body>
+</html>
